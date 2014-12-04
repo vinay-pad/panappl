@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.GraphView.LegendAlign;
 import com.jjoe64.graphview.GraphViewSeries;
 import com.jjoe64.graphview.GraphViewSeries.GraphViewSeriesStyle;
 import com.jjoe64.graphview.GraphView.GraphViewData;
@@ -19,6 +20,7 @@ public class PanGraphView extends Activity{
 	String fw_name;
 	ArrayList<Integer> x_val;
 	ArrayList<String> y_val;
+	@SuppressWarnings("deprecation")
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.graph_info_page);
@@ -33,13 +35,16 @@ public class PanGraphView extends Activity{
 			data[i] = new GraphViewData(s_x_val.doubleValue(), Double.parseDouble(s_y_val)+1);
 		}
 		GraphViewSeriesStyle style = new GraphViewSeriesStyle(Color.rgb(240, 3, 3), 3);
-		GraphViewSeries exampleSeries = new GraphViewSeries(fw_name, style, data);
+		GraphViewSeries exampleSeries = new GraphViewSeries("CPU %", style, data);
 		GraphView graphView = new LineGraphView(
 		    this // context
 		    , fw_name.toString() // heading
 			);
 		graphView.addSeries(exampleSeries);
 		graphView.getGraphViewStyle().setGridStyle(GridStyle.HORIZONTAL);
+		graphView.setShowLegend(true);
+		graphView.setLegendAlign(LegendAlign.MIDDLE);
+		graphView.setLegendWidth(200);
 		LinearLayout layout = (LinearLayout) findViewById(R.id.graph1);
 		layout.addView(graphView);
 	}
